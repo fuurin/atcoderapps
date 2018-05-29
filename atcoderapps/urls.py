@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
-from django.views.generic import TemplateView
+from atcoderperformances.views import IndexView, ShowGraphView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^atcoderperformances/$', TemplateView.as_view(template_name='index.html'), name='index'),
-    url(r'^atcoderperformances/show_graph$', TemplateView.as_view(template_name='show_graph.html'), name='show_graph')
+    url(r'^atcoderperformances/$', IndexView.as_view(), name='index'),
+    url(r'^atcoderperformances/show_graph$', ShowGraphView.as_view(), name='show_graph'),
 ]
 
 if settings.DEBUG:
