@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import FormView
+import matplotlib.pyplot as plt
 from .kernel.atcoder_figure import performance_figure_by_username
 from .kernel.base64_graph import base64_png
 from .forms import UserNameForm
