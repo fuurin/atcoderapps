@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import FormView			
-from .kernel.atcoder_data import AtCoderDataFrame
+from .kernel.atcoder_data import atcoder_data_frame
+from .kernel.html_graph import atcoder_graph
 from .forms import UserNameForm
 
 class IndexView(FormView):
@@ -16,6 +17,6 @@ class ShowGraphView(FormView):
 		context = super().get_context_data(**kwargs)
 		if self.request.GET.get("username"):
 			username = self.request.GET["username"]
-			df = AtCoderDataFrame(username)
+			df = atcoder_data_frame(username)
 			context['atcoder_data_table'] = df.to_html() if not df.empty else "User Not Found."
 		return context

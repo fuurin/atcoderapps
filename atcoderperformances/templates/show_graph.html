@@ -5,11 +5,13 @@
 </head>
 <body>
 	<h1>This is show graph page</h1>
-	<form action="./show_graph">
+	<form action=".">
 		{{form}}
 		<input type="submit", value="Show Graph">
 	</form>
 	<br/>
 	{{ atcoder_data_table | safe}} <!-- | safe でエスケープしない　-->
+	<br/>
+	<img src="/atcoderperformances/graph/", alt="Image Error">
 </body>
 </html>

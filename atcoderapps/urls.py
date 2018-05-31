@@ -18,11 +18,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
 from atcoderperformances.views import IndexView, ShowGraphView
+from atcoderperformances.kernel.html_graph import atcoder_graph
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^atcoderperformances/$', IndexView.as_view(), name='index'),
-    url(r'^atcoderperformances/show_graph$', ShowGraphView.as_view(), name='show_graph'),
+    url(r'^atcoderperformances/show_graph/$', ShowGraphView.as_view(), name='show_graph'),
+    url(r'^atcoderperformances/graph/$', atcoder_graph, name='graph'),
 ]
 
 if settings.DEBUG:
