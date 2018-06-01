@@ -10,9 +10,9 @@
 		<input type="submit", value="Show Graph">
 	</form>
 	{% if atcoder_data_table %}
-	<br/>
-	{{ atcoder_data_table | safe}} <!-- | safe でエスケープしない　-->
+		<br/>
+		{{ atcoder_data_table | safe}} <!-- | safe でエスケープしない　-->
 	{% endif %}
-	<img src="data:image/png;base64,{{ atcoder_graph }}" alt="Image Error" style="display: block; margin: 0 auto;">
+	<img src="data:image/png;base64,{{ figure }}" alt="Image Error" style="display: block; margin: 0 auto;">
 </body>
 </html>

@@ -1,7 +1,12 @@
+import matplotlib
+matplotlib.use('agg') # async handler deleted by the wrong thread を防ぐ
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from .atcoder_data import atcoder_data_frame
+
+
 
 AREA_COLOR = [
 	[4000, 2800, 'tomato'],
@@ -16,35 +21,78 @@ AREA_COLOR = [
 
 ALPHA = 0.7
 
-def upper_lower_bounds(plt, x, upper, lower, color=None, alpha=None):
+
+
+def upper_lower_bounds(x, upper, lower, color=None, alpha=None):
 	xlength = len(x)
+	
 	y_upper = np.full(xlength, upper)
 	y_lower = np.full(xlength, lower)
+	
 	plt.fill_between(x, y_upper, y_lower, facecolor=color, alpha=alpha)
 
-def find_limit(p_max):
+
+
+def atcoder_color_fill(x_area):
+	for ac in AREA_COLOR: 
+		upper_lower_bounds(x_area, ac[0], ac[1], ac[2], ALPHA)
+
+
+
+def find_upper_limit(p_max):
 	for i, ac in enumerate(AREA_COLOR):
 		if ac[1] <= p_max and p_max < ac[0]:
-			return i if i == 0 else i-1
+			break
+			
+	if i == 0:
+		return AREA_COLOR[i][0]
+	else: 
+		return AREA_COLOR[i-1][0]
 
-def performance_figure(dataframe, username=None):
+
+
+def plot_user_performance(ax, username):
+	dataframe = atcoder_data_frame(username)
+
+	if dataframe.empty: return False
+
 	df = dataframe[dataframe.IsRated]
 	x = np.array(pd.to_datetime(df.EndTime))
 	y = df.InnerPerformance
+	
+	ax.plot(x, y, label=username)
+	
+	user_ylim = find_upper_limit(y.max())
+	max_ylim = max(ax.get_ylim()[1], user_ylim)
+	ax.set_ylim(0, max_ylim)
+	
+	return True
 
-	plt.figure(figsize=(10,8))
-	if username: plt.title("{}'s performance @ atcoder".format(username))
-	plt.ylim(0, AREA_COLOR[find_limit(y.max())][0])
-	for ac in AREA_COLOR: upper_lower_bounds(plt, x, ac[0], ac[1], ac[2], ALPHA)
+
+
+def performance_figure(username=None, rivalname=None):
+	fig, ax = plt.subplots(figsize=(8,6))
+
+	user_exist, rival_exist = False, False
+	if username: user_exist = plot_user_performance(ax, username)
+	if rivalname: rival_exist = plot_user_performance(ax, rivalname)
+
+	if user_exist and rival_exist:
+		plt.title("Performance of {} and {}".format(username, rivalname))
+	elif user_exist:
+		plt.title("Performance of {}".format(username))
+	elif rival_exist:
+		plt.title("Performance of {}".format(rivalname))
+	else:
+		plt.title("Both users could not be found.")
+
+	atcoder_color_fill(ax.get_xlim())
+
 	plt.xlabel("time")
 	plt.ylabel("performance")
+	plt.legend()
 	plt.grid()
-	figure = plt.plot(x, y)[0].figure
-	figure.autofmt_xdate() # 時系列ラベルが重ならないようにする
-
 	plt.close()
-	return figure
 
-def performance_figure_by_username(username):
-	data = atcoder_data_frame(username)
-	return performance_figure(data, username)
+	fig.autofmt_xdate() # 時系列ラベルが重ならないようにする
+	return fig

@@ -1,4 +1,5 @@
 from django import forms
 
-class UserNameForm(forms.Form):
+class UserNamesForm(forms.Form):
 	username = forms.CharField(required=True)
+	rivalname = forms.CharField(required=False)
