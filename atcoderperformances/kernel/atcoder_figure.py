@@ -9,6 +9,7 @@ from .atcoder_data import atcoder_data_frame
 
 
 AREA_COLOR = [
+	[4000, 6000, 'tomato'],
 	[4000, 2800, 'tomato'],
 	[2800, 2400, 'sandybrown'],
 	[2400, 2000, 'yellow'],
