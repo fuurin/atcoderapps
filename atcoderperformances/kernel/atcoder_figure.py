@@ -79,20 +79,22 @@ def performance_figure(username=None, rivalname=None):
 	if rivalname: rival_exist = plot_user_performance(ax, rivalname)
 
 	if user_exist and rival_exist:
-		plt.title("Performance of {} and {}".format(username, rivalname))
+		title = "Performance of {} and {}".format(username, rivalname)
 	elif user_exist:
-		plt.title("Performance of {}".format(username))
+		title = "Performance of {}".format(username)
 	elif rival_exist:
-		plt.title("Performance of {}".format(rivalname))
+		title = "Performance of {}".format(rivalname)
 	else:
-		plt.title("Both users could not be found.")
-
+		title = "Both users could not be found."
+	
 	atcoder_color_fill(ax.get_xlim())
 
-	plt.xlabel("time")
+	plt.title(title, fontsize=20)
+	plt.xlabel("date")
 	plt.ylabel("performance")
 	plt.legend()
 	plt.grid()
+	plt.tight_layout()
 	plt.close()
 
 	fig.autofmt_xdate() # 時系列ラベルが重ならないようにする

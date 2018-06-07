@@ -1,16 +1,15 @@
 {% extends "./_base.html" %}
 {% load static %}
 {% block content %} 
-    <div class="text-center">
+    <div class="text-center mb-3">
 		<h1>AtCoder Performances</h1>
 	</div>
-	<br/>
 	<div class="w-75 m-auto">
 		<form action="./show_graph/">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-5 col-sm-12 text-center">
-						<h2>Username</h2>
+						<h2>User name</h2>
 						<div class="input-group input-group-lg">
 							{{ form.username }}
 						</div>
@@ -19,7 +18,7 @@
 						<img src="{% static 'images/vs.png' %}">
 					</div>
 					<div class="col-md-5 col-sm-12 text-center">
-						<h2>Rivalname</h2>
+						<h2>Rival name</h2>
 						<div class="input-group input-group-lg">
 							{{ form.rivalname }}
 						</div>
