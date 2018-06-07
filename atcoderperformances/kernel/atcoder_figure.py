@@ -9,11 +9,11 @@ from .atcoder_data import atcoder_data_frame
 
 
 AREA_COLOR = [
-	[4000, 6000, 'tomato'],
+	[6000, 4000, 'tomato'],
 	[4000, 2800, 'tomato'],
 	[2800, 2400, 'sandybrown'],
 	[2400, 2000, 'yellow'],
-	[2000, 1600, 'mediumpurple'],
+	[2000, 1600, 'royalblue'],
 	[1600, 1200, 'lightskyblue'],
 	[1200, 800, 'lightgreen'],
 	[800, 400, 'peru'],
@@ -21,6 +21,29 @@ AREA_COLOR = [
 ]
 
 ALPHA = 0.7
+
+
+
+def entitle(exist_user, exist_rival):
+	if len(exist_user) and len(exist_rival):
+		if len(exist_rival) == 1:
+			title = "Performance of {} and {}".format(exist_user[0], exist_rival[0])
+		else:
+			title = "Performance of {} and rivals".format(exist_user[0])
+	
+	elif len(exist_user):
+		title = "Performance of {}".format(exist_user[0])
+	
+	elif len(exist_rival):
+		if len(exist_rival) == 1:
+			title = "Performance of {}".format(exist_rival[0])
+		else:
+			title = "Performance of rivals"
+	
+	else:
+		title = "All users could not be found."
+
+	return title
 
 
 
@@ -52,43 +75,43 @@ def find_upper_limit(p_max):
 
 
 
-def plot_user_performance(ax, username):
-	dataframe = atcoder_data_frame(username)
-
-	if dataframe.empty: return False
-
-	df = dataframe[dataframe.IsRated]
-	x = np.array(pd.to_datetime(df.EndTime))
-	y = df.InnerPerformance
+def plot_user_performance(ax, users):
+	exist_user = []
 	
-	ax.plot(x, y, label=username)
-	
-	user_ylim = find_upper_limit(y.max())
-	max_ylim = max(ax.get_ylim()[1], user_ylim)
-	ax.set_ylim(0, max_ylim)
-	
-	return True
+	for user in users:
+		dataframe = atcoder_data_frame(user)
+
+		if dataframe.empty: continue
+
+		df = dataframe[dataframe.IsRated]
+		x = np.array(pd.to_datetime(df.EndTime))
+		y = df.InnerPerformance
+		
+		ax.plot(x, y, label=user)
+		
+		user_ylim = find_upper_limit(y.max())
+		max_ylim = max(ax.get_ylim()[1], user_ylim)
+		ax.set_ylim(0, max_ylim)
+
+		exist_user.append(user)
+
+	return exist_user
 
 
 
-def performance_figure(username=None, rivalname=None):
+def performance_figure(username=None, rivalnames=None):
 	fig, ax = plt.subplots(figsize=(8,6))
 
-	user_exist, rival_exist = False, False
-	if username: user_exist = plot_user_performance(ax, username)
-	if rivalname: rival_exist = plot_user_performance(ax, rivalname)
-
-	if user_exist and rival_exist:
-		title = "Performance of {} and {}".format(username, rivalname)
-	elif user_exist:
-		title = "Performance of {}".format(username)
-	elif rival_exist:
-		title = "Performance of {}".format(rivalname)
-	else:
-		title = "Both users could not be found."
+	rivals = rivalnames.replace(" ", "").split(',')
+	exist_user, exist_rival = [], []
+	if username: 
+		exist_user = plot_user_performance(ax, [username])
+	if rivalnames: 
+		exist_rival = plot_user_performance(ax, rivals)
 	
 	atcoder_color_fill(ax.get_xlim())
 
+	title = entitle(exist_user, exist_rival)
 	plt.title(title, fontsize=20)
 	plt.xlabel("date")
 	plt.ylabel("performance")
