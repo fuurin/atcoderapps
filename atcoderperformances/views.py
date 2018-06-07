@@ -10,6 +10,11 @@ class IndexView(FormView):
 	template_name = "index.html"
 	form_class = UserNamesForm
 
+	def get_form(self):
+		form = super(IndexView, self).get_form()
+		form.set_attr("username", {"tabindex": 1, "class": "form-control"})
+		form.set_attr("rivalname", {"tabindex": 2, "class": "form-control"})
+		return form
 
 
 class ShowGraphView(FormView):
@@ -31,6 +36,6 @@ class ShowGraphView(FormView):
 
 	def get_form(self):
 		form = super(ShowGraphView, self).get_form()
-		form.set_username_value(self.username)
-		form.set_rivalname_value(self.rivalname)
+		form.set_attr("username", {"value": self.username, "tabindex": 1, "class": "form-control"})
+		form.set_attr("rivalname",{"value": self.rivalname, "tabindex": 2, "class": "form-control"})
 		return form

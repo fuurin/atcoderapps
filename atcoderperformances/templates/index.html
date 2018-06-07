@@ -1,8 +1,36 @@
 {% extends "./_base.html" %}
+{% load static %}
 {% block content %} 
-    <h1>This is index page</h1>
-	<form action="./show_graph/">
-		{{form}}
-		<input type="submit", value="Show Graph">
-	</form>
+    <div class="text-center">
+		<h1>AtCoder Performances</h1>
+	</div>
+	<br/>
+	<div class="w-75 m-auto">
+		<form action="./show_graph/">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-5 col-sm-12 text-center">
+						<h2>Username</h2>
+						<div class="input-group input-group-lg">
+							{{ form.username }}
+						</div>
+					</div>
+					<div id="vs_img_box" class="col-md-2 col-sm-12 text-center">
+						<img src="{% static 'images/vs.png' %}">
+					</div>
+					<div class="col-md-5 col-sm-12 text-center">
+						<h2>Rivalname</h2>
+						<div class="input-group input-group-lg">
+							{{ form.rivalname }}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<input class="btn btn-primary btn-lg" type="submit", value="Show Graph" tabindex="3">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 {% endblock %}

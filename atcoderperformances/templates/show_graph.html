@@ -1,13 +1,47 @@
 {% extends "./_base.html" %}
+{% load static %}
 {% block content %} 
-    <h1>This is show graph page</h1>
+	<div class="text-center">
+		<h1>AtCoder Performances</h1>
+	</div>
+	<br/>
 	<form action=".">
-		{{form}}
-		<input type="submit", value="Show Graph">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<h2>Username</h2>
+							<div class="input-group input-group-lg">
+								{{ form.username }}
+							</div>
+						</div>
+						<div id="vs_img_box" class="col-md-12 text-center">
+							<img src="{% static 'images/vs.png' %}">
+						</div>
+						<div class="col-md-12 text-center">
+							<h2>Rivalname</h2>
+							<div class="input-group input-group-lg">
+								{{ form.rivalname }}
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<input class="btn btn-primary btn-lg" type="submit", value="Show Graph" tabindex="3">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9 col-sm-12">
+					<img id="atcoder_graph" src="data:image/png;base64,{{ figure }}" alt="Image Error">
+				</div>
+			</div>
+		</div>
 	</form>
+
 	{% if atcoder_data_table %}
 		<br/>
 		{{ atcoder_data_table | safe}} <!-- | safe でエスケープしない　-->
 	{% endif %}
-	<img src="data:image/png;base64,{{ figure }}" alt="Image Error" style="display: block; margin: 0 auto;">
+
 {% endblock %}
