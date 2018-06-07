@@ -22,14 +22,15 @@ class ShowGraphView(FormView):
 		return df.to_html() if not df.empty else "User Not Found."
 
 	def get_context_data(self, **kwargs):
+		username = self.username = self.request.GET.get("username")
+		rivalname = self.rivalname = self.request.GET.get("rivalname")
 		context = super().get_context_data(**kwargs)
-		
-		username = self.request.GET.get("username")
-		rivalname = self.request.GET.get("rivalname")
-
-		figure = performance_figure(username, rivalname)
-		
 		context['username'], context['rivalname'] = username, rivalname	
-		context['figure'] = base64_png(figure)
-		
+		context['figure'] = base64_png(performance_figure(username, rivalname))
 		return context
+
+	def get_form(self):
+		form = super(ShowGraphView, self).get_form()
+		form.set_username_value(self.username)
+		form.set_rivalname_value(self.rivalname)
+		return form

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>AtCoder Performances</title>
-</head>
-<body>
-	<h1>This is show graph page</h1>
+{% extends "./_base.html" %}
+{% block content %} 
+    <h1>This is show graph page</h1>
 	<form action=".">
 		{{form}}
 		<input type="submit", value="Show Graph">
@@ -14,5 +10,4 @@
 		{{ atcoder_data_table | safe}} <!-- | safe でエスケープしない　-->
 	{% endif %}
 	<img src="data:image/png;base64,{{ figure }}" alt="Image Error" style="display: block; margin: 0 auto;">
-</body>
-</html>
+{% endblock %}
