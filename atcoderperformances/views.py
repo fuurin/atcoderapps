@@ -33,7 +33,8 @@ class ShowGraphView(FormView):
 		context['username'], context['rivalname'] = username, rivalname
 
 		# 比較対象ユーザが多すぎるならエラーを出してライバルに関するグラフはすべて表示しない
-		rivals = rivalname.replace(" ", "").split(",")
+		rivals = list(set(rivalname.replace(" ", "").split(",")))
+		if "" in rivals: rivals.remove("")
 		if len(rivals) > MAX_RIVAL_NUM:
 			msg = "Number of rivals is up to &nbsp;<strong>{}</strong>.".format(MAX_RIVAL_NUM)
 			context['form'].errors['rival_num_error'] = msg
