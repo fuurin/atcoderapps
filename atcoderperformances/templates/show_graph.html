@@ -6,6 +6,27 @@
 	</div>
 	<form action=".">
 		<div class="container-fluid">
+			
+			<!-- ライバルユーザが多すぎるときエラー表示 -->
+			{% if form.errors.rival_num_error %}
+			<div class="row alert alert-danger alert-dismissible fade show" role="alert">
+				{{ form.errors.rival_num_error | safe}}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endif %}
+
+			<!-- Not Found ユーザの表示 -->
+			{% if form.errors.not_found_users_error %}
+			<div class="row alert alert-danger alert-dismissible fade show" role="alert">
+				{{ form.errors.not_found_users_error | safe}}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endif %}
+
 			<div class="row">
 				<div class="col-md-3 col-sm-12">
 					<div class="row mt-2">

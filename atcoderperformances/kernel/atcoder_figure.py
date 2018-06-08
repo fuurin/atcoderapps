@@ -102,12 +102,13 @@ def plot_user_performance(ax, users):
 def performance_figure(username=None, rivalnames=None):
 	fig, ax = plt.subplots(figsize=(8,6))
 
-	rivals = rivalnames.replace(" ", "").split(',')
 	exist_user, exist_rival = [], []
 	if username: 
 		exist_user = plot_user_performance(ax, [username])
 	if rivalnames: 
-		exist_rival = plot_user_performance(ax, rivals)
+		exist_rival = plot_user_performance(ax, rivalnames)
+
+	not_found_users = list((set([username]) - set(exist_user)) | (set(rivalnames) - set(exist_rival)))
 	
 	atcoder_color_fill(ax.get_xlim())
 
@@ -121,4 +122,4 @@ def performance_figure(username=None, rivalnames=None):
 	plt.close()
 
 	fig.autofmt_xdate() # 時系列ラベルが重ならないようにする
-	return fig
+	return fig, not_found_users
