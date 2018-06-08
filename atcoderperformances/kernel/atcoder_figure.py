@@ -87,7 +87,7 @@ def plot_user_performance(ax, users):
 		x = np.array(pd.to_datetime(df.EndTime))
 		y = df.InnerPerformance
 		
-		ax.plot(x, y, label=user)
+		ax.plot(x, y, label=user, marker="o")
 		
 		user_ylim = find_upper_limit(y.max())
 		max_ylim = max(ax.get_ylim()[1], user_ylim)
